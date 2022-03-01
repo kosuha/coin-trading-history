@@ -32,4 +32,4 @@ app.get("/api/history", (req, res) => {
 	});
 })
 
-app.listen(3000, () => console.log("### Start API Server ###"));
+app.listen(80, () => console.log("### Start API Server ###"));
