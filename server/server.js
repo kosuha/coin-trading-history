@@ -17,6 +17,10 @@ const db_info = {
 const db = mysql.createConnection(db_info);
 db.connect();
 
+app.get("/", (req, res) => {
+    res.send("Hello World");
+});
+
 app.get("/api/history", (req, res) => {
 	const query = "SELECT * FROM history";
 	db.query(query, (err, rows, fields) => {
