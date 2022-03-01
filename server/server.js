@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require('mysql');
 const conn = require("./config/conn.json");
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
@@ -16,10 +18,6 @@ const db_info = {
 
 const db = mysql.createConnection(db_info);
 db.connect();
-
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
 
 app.get("/api/history", (req, res) => {
 	const query = "SELECT * FROM history";
