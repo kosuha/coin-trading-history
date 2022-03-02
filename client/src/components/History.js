@@ -6,7 +6,7 @@ const History = () => {
 
     useEffect(() => {
         axios
-            .get(`https://coin-trading-bot.tk/api/history`)
+            .get(`http://coin-trading-bot.tk/api/history`)
             .then((response) => {
                 if (response.data.success) {
                     // console.log(response.data.data);

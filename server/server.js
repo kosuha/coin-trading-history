@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const mysql = require('mysql');
 const conn = require("./config/conn.json");
 const cors = require('cors');
