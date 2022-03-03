@@ -20,7 +20,6 @@ const History = () => {
 	const renderHistory = HistoryData.map((row, index) => {
         return (
             <div>
-                <h1>바이낸스 ETH/USDT 선물 자동매매 기록</h1>
                 <div 
                     key={index} 
                     style={{
