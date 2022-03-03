@@ -6,7 +6,7 @@ const History = () => {
 
     useEffect(() => {
         axios
-            .get(`http://coin-trading-bot.xyz/api/history`)
+            .get('http://3.35.14.224/api/history')
             .then((response) => {
                 if (response.data.success) {
                     // console.log(response.data.data);
