@@ -19,17 +19,20 @@ const History = () => {
 
 	const renderHistory = HistoryData.map((row, index) => {
         return (
-            <div 
-				key={index} 
-				style={{
-					padding: "1rem"
-				}
-			}>
-				<div>{row.date}</div>
-				{/* <div>가격: {row.price} USDT</div> */}
-				<div>자산: {row.balance} USDT</div>
-				<div>수익률: {Math.round((row.balance - 100) * 100) / 100} %</div>
-			</div>
+            <div>
+                <h1>바이낸스 ETH/USDT 선물 자동매매 기록</h1>
+                <div 
+                    key={index} 
+                    style={{
+                        padding: "1rem"
+                    }
+                }>
+                    <div>{row.date}</div>
+                    {/* <div>가격: {row.price} USDT</div> */}
+                    <div>자산: {row.balance} USDT</div>
+                    <div>수익률: {Math.round((row.balance - 100) * 100) / 100} %</div>
+                </div>
+            </div>
         );
     });
 
