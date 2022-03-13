@@ -41,11 +41,13 @@ app.get("/api/chart", (req, res) => {
 	const query = "SELECT * FROM history";
 	db.query(query, (err, rows, fields) => {
 		if (err) return res.json({ success: false, err });
-		let newRow = { date: [], balance: [], price: [] };
+		const startBalance = rows[0].balance;
+		const startPrice = rows[0].price;
+		let newRow = { date: [], ror: [], buyandhold: [] };
 		rows.map((row, index) => {
 			newRow.date[index] = row.date;
-			newRow.balance[index] = row.balance;
-			newRow.price[index] = row.price;
+			newRow.ror[index] = (startBalance - row.balance) / startBalance * 100;
+			newRow.buyandhold[index] = (startPrice - row.price) / startPrice * 100;
 		});
 		return res.status(200).send({
 			success: true,
