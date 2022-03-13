@@ -37,4 +37,34 @@ app.get("/api/history", (req, res) => {
 	});
 })
 
+app.get("/api/chart/balance", (req, res) => {
+	const query = "SELECT * FROM history";
+	db.query(query, (err, rows, fields) => {
+		if (err) return res.json({ success: false, err });
+		let newRow = [];
+		rows.map((row, index) => {
+			newRow[index] = { x: row.date, y: row.balance }
+		});
+		return res.status(200).send({
+			success: true,
+			data: newRow
+		})
+	});
+})
+
+app.get("/api/chart/price", (req, res) => {
+	const query = "SELECT * FROM history";
+	db.query(query, (err, rows, fields) => {
+		if (err) return res.json({ success: false, err });
+		let newRow = [];
+		rows.map((row, index) => {
+			newRow[index] = { x: row.date, y: row.price }
+		});
+		return res.status(200).send({
+			success: true,
+			data: newRow
+		})
+	});
+})
+
 app.listen(80, () => console.log("### Start API Server ###"));
