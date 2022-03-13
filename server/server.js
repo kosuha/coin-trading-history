@@ -46,8 +46,8 @@ app.get("/api/chart", (req, res) => {
 		let newRow = { date: [], ror: [], buyandhold: [] };
 		rows.map((row, index) => {
 			newRow.date[index] = row.date;
-			newRow.ror[index] = (startBalance - row.balance) / startBalance * 100;
-			newRow.buyandhold[index] = (startPrice - row.price) / startPrice * 100;
+			newRow.ror[index] = (row.balance - startBalance) / startBalance * 100;
+			newRow.buyandhold[index] = (row.price - startPrice) / startPrice * 100;
 		});
 		return res.status(200).send({
 			success: true,
