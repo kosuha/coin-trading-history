@@ -28,11 +28,11 @@ app.get("/api/history", (req, res) => {
 		const startBalance = rows[0].balance;
 
 		rows.map((row, index) => {
-			row.totalProfit = row.balance - startBalance;
+			row.totalProfit = Math.round((row.balance - startBalance) * 100) / 100;
 			row.hpr = Math.round(row.totalProfit / startBalance * 100 * 100) / 100;
 
 			if (index != 0) {
-				row.profit = row.balance - rows[index - 1].balance;
+				row.profit = Math.round((row.balance - rows[index - 1].balance) * 100) / 100;
 				row.ror = Math.round(row.profit / rows[index - 1].balance * 100 * 100) / 100;
 				
 				if (index % 2 == 1) {
