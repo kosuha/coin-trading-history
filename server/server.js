@@ -20,12 +20,6 @@ const db_info = {
 const db = mysql.createConnection(db_info);
 db.connect();
 
-// app.use(express.static("client/build"));
-
-// app.get("/", (req, res) => {
-// 	res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-// });
-
 app.get("/api/history", (req, res) => {
 	const query = "SELECT * FROM history";
 	db.query(query, (err, rows, fields) => {
@@ -34,9 +28,19 @@ app.get("/api/history", (req, res) => {
 		const startBalance = rows[0].balance;
 
 		rows.map((row, index) => {
-			row.hpr = Math.round((row.balance - startBalance) * 100) / 100;
+			row.totalProfit = row.balance - startBalance;
+			row.hpr = Math.round(row.totalProfit / startBalance * 100 * 100) / 100;
+
 			if (index != 0) {
-				row.ror = Math.round((row.balance - rows[index - 1].balance) * 100) / 100;
+				row.profit = row.balance - rows[index - 1].balance;
+				row.ror = Math.round(row.profit / rows[index - 1].balance * 100 * 100) / 100;
+				
+				if (index % 2 == 1) {
+					row.position = "short";
+				} else {
+					row.position = "long";
+				}
+
 				if (row.ror > 0) {
 					row.outcome = "win";
 				} else if (row.ror < 0) {
@@ -45,8 +49,10 @@ app.get("/api/history", (req, res) => {
 					row.outcome = "draw";
 				}
 			} else {
+				row.profit = 0;
 				row.outcome = "draw";
-				row.ror = 0
+				row.ror = 0;
+				row.position = "long";
 			}
 		});
 
