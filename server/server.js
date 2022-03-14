@@ -30,6 +30,26 @@ app.get("/api/history", (req, res) => {
 	const query = "SELECT * FROM history";
 	db.query(query, (err, rows, fields) => {
 		if (err) return res.json({ success: false, err });
+		
+		const startBalance = rows[0].balance;
+
+		rows.map((row, index) => {
+			row.hpr = Math.round((row.balance - startBalance) * 100) / 100;
+			if (index != 0) {
+				row.ror = Math.round((row.balance - rows[index - 1].balance) * 100) / 100;
+				if (row.ror > 0) {
+					row.outcome = "win";
+				} else if (row.ror < 0) {
+					row.outcome = "lose";
+				} else {
+					row.outcome = "draw";
+				}
+			} else {
+				row.outcome = "draw";
+				row.ror = 0
+			}
+		});
+
 		return res.status(200).send({
 			success: true,
 			data: rows
