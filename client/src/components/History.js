@@ -2,44 +2,63 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const History = () => {
-	const [HistoryData, setHistoryData] = useState([]);
+    const [HistoryData, setHistoryData] = useState([]);
 
     useEffect(() => {
-        axios
-            .get('http://3.35.14.224/api/history')
-            .then((response) => {
-                if (response.data.success) {
-                    // console.log(response.data.data);
-                    setHistoryData([...response.data.data].reverse());
-                } else {
-                    alert("데이터 로딩 실패");
-                }
-            });
+        axios.get("http://3.35.14.224/api/history").then((response) => {
+            if (response.data.success) {
+                // console.log(response.data.data);
+                setHistoryData([...response.data.data].reverse());
+            } else {
+                alert("데이터 로딩 실패");
+            }
+        });
     }, []);
 
-	const renderHistory = HistoryData.map((row, index) => {
+    const renderHistory = HistoryData.map((row, index) => {
+        let color = "black";
+        if (row.outcome === "lose") {
+            color = "red";
+        }
         return (
-            <div>
-                <div 
-                    key={index} 
-                    style={{
-                        padding: "1rem"
-                    }
-                }>
-                    <div>{row.date}</div>
-                    {/* <div>가격: {row.price} USDT</div> */}
-                    <div>자산: {row.balance} USDT</div>
-                    <div>수익률: {Math.round((row.balance - 100) * 100) / 100} %</div>
-                </div>
-            </div>
+            <tr
+                key={index}
+            >
+                <td style={{ padding: "1rem" }}>{row.id}</td>
+                <td style={{ padding: "1rem" }}>{row.position}</td>
+                <td style={{ padding: "1rem" }}>{row.date}</td>
+                <td style={{ padding: "1rem", textAlign: "end" }}>
+                    {row.price.toFixed(2)}
+                </td>
+                <td style={{ padding: "1rem", textAlign: "end" }}>
+                    {row.balance.toFixed(2)}
+                </td>
+                <td style={{ padding: "1rem", textAlign: "end", color: color, fontSize: "0.8rem" }}>
+                    {row.profit.toFixed(2)}
+                    <br />({row.ror.toFixed(2)} %)
+                </td>
+                <td style={{ padding: "1rem", textAlign: "end", fontSize: "0.8rem" }}>
+                    {row.totalProfit.toFixed(2)}
+                    <br />({row.hpr.toFixed(2)} %)
+                </td>
+            </tr>
         );
     });
 
     return (
-		<div>
-			{renderHistory}
-		</div>
-	);
+        <table>
+            <thead>
+                <th>#</th>
+                <th>포지션</th>
+                <th>시간</th>
+                <th>가격</th>
+                <th>자산</th>
+                <th>수익</th>
+                <th>누적 수익</th>
+            </thead>
+            {renderHistory}
+        </table>
+    );
 };
 
 export default History;

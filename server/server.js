@@ -63,6 +63,24 @@ app.get("/api/history", (req, res) => {
 	});
 })
 
+// app.get("/api/summary", (req, res) => {
+// 	const query = "SELECT * FROM history";
+// 	db.query(query, (err, rows, fields) => {
+// 		if (err) return res.json({ success: false, err });
+		
+// 		const startBalance = rows[0].balance;
+
+// 		rows.map((row, index) => {
+			
+// 		});
+
+// 		return res.status(200).send({
+// 			success: true,
+// 			data: rows
+// 		})
+// 	});
+// })
+
 app.get("/api/chart", (req, res) => {
 	const query = "SELECT * FROM history";
 	db.query(query, (err, rows, fields) => {
