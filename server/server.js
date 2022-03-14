@@ -36,9 +36,9 @@ app.get("/api/history", (req, res) => {
 				row.ror = Math.round(row.profit / rows[index - 1].balance * 100 * 100) / 100;
 				
 				if (index % 2 == 1) {
-					row.position = "short";
-				} else {
 					row.position = "long";
+				} else {
+					row.position = "short";
 				}
 
 				if (row.ror > 0) {
@@ -52,7 +52,7 @@ app.get("/api/history", (req, res) => {
 				row.profit = 0;
 				row.outcome = "draw";
 				row.ror = 0;
-				row.position = "long";
+				row.position = "";
 			}
 		});
 
